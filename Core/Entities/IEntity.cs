@@ -1,16 +1,12 @@
 ﻿using System;
-using Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-namespace DataAccess.Abstract
+namespace Core.Entities
 {
-     public interface ICarDal:IEntityRepository<Car>
+    public interface IEntity
     {
-       
-
     }
 }
