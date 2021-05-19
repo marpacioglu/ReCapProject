@@ -1,5 +1,6 @@
 ﻿using DataAccess.Abstract;
 using Entities;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,24 @@ namespace DataAccess.Concrete.EntityFrameWork
         public List<Car> GetById(int id)
         {
             return context.Set<Car>().Where(c => c.Id == id).ToList();
+        }
+
+        public List<CarDTO> GetCarDetails()
+        {
+            var result = from c in context.Cars
+                         join col in context.Colors
+                         on c.ColorId equals col.Id
+                         join b in context.Brands
+                         on c.BrandId equals b.Id
+                         select new CarDTO
+                         {
+                             CarName=c.Name,
+                             BrandName=b.BrandName,
+                             ColorName=col.ColorName,
+                             DailyPrice=c.DailyPrice,
+                         };
+            return result.ToList();
+                       
         }
 
         public void Update(Car entity)

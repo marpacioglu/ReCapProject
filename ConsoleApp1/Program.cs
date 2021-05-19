@@ -11,7 +11,7 @@ namespace ConsoleApp1
        
         static void Main(string[] args)
         {
-            CarTest();
+            CarDetailTest();
         }
         private static void CarTest()
         {
@@ -40,6 +40,47 @@ namespace ConsoleApp1
             //    Console.WriteLine("Araba Rengi" + item.ColorId + "Tanım=" + item.Description);
 
             //}
+        }
+        private static void ColorTest()
+        {
+            ColorServiceManager colorManager = new ColorServiceManager(new EfColorDal());
+            //colorManager.Add(new Color { ColorName = "Sarı" });
+            //colorManager.Delete(new Color { Id = 3 });
+            colorManager.Update(new Color { Id = 2, ColorName = "Gri" });
+            var result1 = colorManager.GetAll();
+            foreach (var item in result1)
+            {
+                Console.WriteLine("Renk:" + item.ColorName);
+
+
+            }
+            var result2 = colorManager.GetById(2);
+            foreach (var item in result2)
+            {
+                Console.WriteLine("Idsi 2 olan renk" + item.ColorName);
+            }
+            
+
+        }
+        private static void BranTest()
+        {
+            BrandServiceManager bsm = new BrandServiceManager(new EfBrandDal());
+            bsm.Add(new Brand { BrandName = "Renault" });
+            bsm.Add(new Brand { BrandName = "Mercedes" });
+            var result = bsm.GetAll();
+            foreach (var item in result)
+            {
+                Console.WriteLine("Marka:" + item.BrandName);
+            }
+        }
+        private static void CarDetailTest()
+        {
+            CarServiceManager carser = new CarServiceManager(new EfCarDal());
+            var result = carser.GetCarDetails();
+            foreach (var item in result)
+            {
+                Console.WriteLine("Araba Adı:" + item.CarName + "Araba Markası:" + item.BrandName+ "Araba Rengi:" + item.ColorName + "Araba Ücreti:" + item.DailyPrice);
+            }
         }
     }
 }
